@@ -75,19 +75,52 @@ var input = require('fs').readFileSync('/dev/stdin', 'utf8');
 var lines = input.split(/\s+/); //vai colocar tudo em uma variavel ex: |10|10|3|....
 
 let i = 0
-while(i < lines.length){
-    let X = parseInt(lines[i++]) //altura da placa da empresa
-    let Y = parseInt(lines[i++]) //largura
-    let P = parseInt(lines[i++]) //quantas placas
-    for(let j = 0; j <= P; j++){
-        let Xi = parseInt(lines[i++])
-        let Yi = parseInt(lines[i++])
-
-        if((Xi <= X && Yi <= Y) || (Xi <= Y && Yi <= X)){
-            console.log(`Sim`)
-        } else {
-            console.log(`Nao`)
+while (i < lines.length) {
+    let X = parseInt(lines[i++]) // altura da placa da empresa
+    let Y = parseInt(lines[i++]) // largura da placa da empresa
+    let P = parseInt(lines[i++]) // quantas placas
+    for (let j = 0; j < P; j++) {
+        let Xi = parseInt(lines[i++]) // altura da placa do usuário
+        let Yi = parseInt(lines[i++]) // largura da placa do usuário
+        if ((Xi <= X && Yi <= Y) || (Xi <= Y && Yi <= X)) {
+            console.log('Sim')
+        }
+        else {
+            console.log('Nao')
         }
     }
+}  
+
+//1179
+let par = [];
+let impar = [];
+
+for (let i = 0; i < lines.length; i++) {
+    if (lines[i] % 2 === 0) {
+        par.push(lines[i]);
+        if (par.length === 5) { // encheu
+            for (let i = 0; i < 5; i++) {
+                console.log(`par[${i}] = ${par[i]}`);
+            }
+            par = []; // esvazia
+        }
+    } else {
+        impar.push(lines[i]);
+        if (impar.length === 5) { // encheu
+            for (let i = 0; i < 5; i++) {
+                console.log(`impar[${i}] = ${impar[i]}`);
+            }
+            impar = []; // esvazia
+        }
+    }
+}
+
+// Depois da leitura, imprime o que restou
+for (let i = 0; i < impar.length; i++) {
+    console.log(`impar[${i}] = ${impar[i]}`);
+}
+
+for (let i = 0; i < par.length; i++) {
+    console.log(`par[${i}] = ${par[i]}`);
 }
 
