@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exemplo de Consumo de API</title>
+</head>
+
+<body>
+    <h1>Lista de Post</h1>
+    <h2>
+        Informe a quantidade de Post desejadas
+        <input type="number" id="qtde" />
+    </h2>
+    <button onclick="carregarPost()">Carregar Dados</button>
+    <div id="listaPost"></div>
+
+    <script>
+        // livra de fazer outra atividade quem chamou esta função
+        async function carregarPost() {
+            let qtde = Number(document.getElementById("qtde").value)
+            try {
+                // await -> aguarda resposta da API
+                const resposta = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${qtde}`);
+                // a API retornou string, precisamos converter para JSON
+                const post = await resposta.json();
+
+                const lista = document.getElementById("listaPost");
+                lista.innerHTML = ""; // limpa lista
+
+                // para cada foto
+                for (let i = 0; i < post.length; i++) {
+                    // cria um elemento html li
+                    const secao = document.createElement("section");
+                    const p1 = document.createElement("p");
+                    // insere texto no item da lista
+                    p1.textContent = post[i].title;
+
+                    const p2 = document.createElement("p");
+                    p1.textContent = post[i].body;
+                    // associa o item da lista à lista
+                    lista.appendChild(p1);
+                    lista.appendChild(p2);
+                    lista.appendChild(secao);
+                }
+            } catch (erro) {
+                console.error("Erro ao carregar post:", erro);
+                alert("Não foi possível carregar os dados da API.");
+            }
+        }
+    </script>
+</body>
+
+</html>
